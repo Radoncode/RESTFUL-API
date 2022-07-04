@@ -5,35 +5,15 @@ require '.env';
 $ch = curl_init();
 
 $headers = [
-    "Authorization: Client-ID ".API_KEY_HERE
+    "Authorization: token ".YOUR_ACCESS_KEY,
+    //"User-Agent: Radoncode"
 ];
-
-$response_headers = [];
-
-$header_callback = function($ch, $header) use (&$response_headers) {
-
-    $len = strlen($header);
-
-    $parts = explode(":", $header, 2);
-
-    if (count($parts) < 2) {
-        
-        return $len;
-
-    }
-
-    $response_headers[$parts[0]] = trim($parts[1]);
-
-    return $len;
-
-};
 
 curl_setopt_array($ch, [
 
-    CURLOPT_URL => "https://api.unsplash.com/photos/random",
+    CURLOPT_URL => "https://api.github.com/user/starred/Radoncode/API-PHP",
     CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_HTTPHEADER => $headers,
-    CURLOPT_HEADERFUNCTION => $header_callback
+    CURLOPT_HTTPHEADER => $headers
 
 ]);
 
@@ -44,7 +24,5 @@ $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
 
 echo $status_code, "\n";
-
-print_r($response_headers);
 
 echo $response, "\n";
