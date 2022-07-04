@@ -8,13 +8,21 @@ $headers = [
     "Authorization: token ".YOUR_ACCESS_KEY
 ];
 
+$payload = json_encode([
+    "name" => "Created from API",
+    "description" => "an example API-created repo"
+
+]);
+
 curl_setopt_array($ch, [
 
-    CURLOPT_URL => "https://api.github.com/user/starred/Radoncode/API-PHP",
+    CURLOPT_URL => "https://api.github.com/user/repos",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_HTTPHEADER => $headers,
     CURLOPT_USERAGENT => "Radoncode",
-    CURLOPT_CUSTOMREQUEST => "PUT"
+    //CURLOPT_CUSTOMREQUEST => "POST",
+    CURLOPT_POST => true,
+    CURLOPT_POSTFIELDS => $payload
 
 ]);
 
