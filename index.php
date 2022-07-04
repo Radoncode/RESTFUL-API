@@ -10,9 +10,11 @@ $headers = [
 ];
 
 curl_setopt_array($ch, [
+    
     CURLOPT_URL => "https://api.unsplash.com/photos/random",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_HTTPHEADER => $headers
+
 ]);
 
 $response = curl_exec($ch);
