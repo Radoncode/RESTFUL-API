@@ -3,11 +3,19 @@
 require '.env';
 
 $data = [
-    "name" => "Rad",
-    "email" => "rad@example.com"
+    "name" => "Code",
+    "email" => "code@example.com"
 ];
 
-$ch = curl_init();
+require __DIR__."/vendor/autoload.php";
+
+$stripe = new \Stripe\StripeClient(YOUR_API_KEY);
+
+$customer = $stripe->customers->create($data);
+
+echo $customer;
+
+/*$ch = curl_init();
 
 curl_setopt_array($ch, [
     CURLOPT_URL => 'https://api.stripe.com/v1/customers',
@@ -21,6 +29,5 @@ $response = curl_exec($ch);
 curl_close($ch);
 
 echo $response;
-
-
+*/
 
