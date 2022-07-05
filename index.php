@@ -4,34 +4,23 @@ require '.env';
 
 $ch = curl_init();
 
-$headers = [
-    "Authorization: token ".YOUR_ACCESS_KEY
-];
-
-$payload = json_encode([
-    "name" => "Created from API",
-    "description" => "an example API-created repo"
-
-]);
-
 curl_setopt_array($ch, [
 
-    CURLOPT_URL => "https://api.github.com/user/repos",
+    CURLOPT_URL => "https://api.github.com/gists/6a5ec3f1ef07a7080aa6781dbc9e1111",
     CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_HTTPHEADER => $headers,
-    CURLOPT_USERAGENT => "Radoncode",
-    //CURLOPT_CUSTOMREQUEST => "POST",
-    CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => $payload
+    CURLOPT_USERAGENT => "Radoncode"
 
 ]);
 
 $response = curl_exec($ch);
 
-$status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
 curl_close($ch);
 
-echo $status_code, "\n";
+$data = json_decode($response, true);
 
-echo $response, "\n";
+print_r($data);
+
+/*foreach ($data as $gist) {
+
+    echo $gist["id"], " - ", $gist["description"], "\n";
+}*/
