@@ -2,25 +2,21 @@
 
 require '.env';
 
-$ch = curl_init();
+require __DIR__."/vendor/autoload.php";
 
-curl_setopt_array($ch, [
+$client = new \GuzzleHttp\Client();
 
-    CURLOPT_URL => "https://api.github.com/gists/6a5ec3f1ef07a7080aa6781dbc9e1111",
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_USERAGENT => "Radoncode"
-
+$response = $client->request('GET', 'https://api.github.com/user/repos', [
+    "headers" => [
+        "Authorization" => "token ".YOUR_ACCESS_KEY,
+        "User-Agent" => "Radoncode"
+    ]
 ]);
 
-$response = curl_exec($ch);
+echo $response->getStatusCode(), "\n";
 
-curl_close($ch);
+echo $response->getHeader("content-type")[0], "\n";
 
-$data = json_decode($response, true);
+echo substr($response->getBody(), 0, 200), "...\n";
 
-print_r($data);
 
-/*foreach ($data as $gist) {
-
-    echo $gist["id"], " - ", $gist["description"], "\n";
-}*/
