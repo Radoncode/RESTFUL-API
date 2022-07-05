@@ -2,21 +2,25 @@
 
 require '.env';
 
-require __DIR__."/vendor/autoload.php";
+$data = [
+    "name" => "Rad",
+    "email" => "rad@example.com"
+];
 
-$client = new \GuzzleHttp\Client();
+$ch = curl_init();
 
-$response = $client->request('GET', 'https://api.github.com/user/repos', [
-    "headers" => [
-        "Authorization" => "token ".YOUR_ACCESS_KEY,
-        "User-Agent" => "Radoncode"
-    ]
+curl_setopt_array($ch, [
+    CURLOPT_URL => 'https://api.stripe.com/v1/customers',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_USERPWD => YOUR_API_KEY,
+    CURLOPT_POSTFIELDS => http_build_query($data)
 ]);
 
-echo $response->getStatusCode(), "\n";
+$response = curl_exec($ch);
 
-echo $response->getHeader("content-type")[0], "\n";
+curl_close($ch);
 
-echo substr($response->getBody(), 0, 200), "...\n";
+echo $response;
+
 
 
